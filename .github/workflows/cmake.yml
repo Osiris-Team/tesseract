@@ -5,6 +5,7 @@ on:
   #push:
   schedule:
     - cron: 0 21 * * *
+  workflow_dispatch: # This allows the workflow to be manually triggered
 
 jobs:
   basictests:
@@ -98,6 +99,18 @@ jobs:
       - name: Build Tesseract
         run: |
              cmake --build build --config Release --target install
+
+      - name: Package Tesseract Binaries
+        run: |
+             mkdir -p artifacts/bin
+             cp -r build/inst/bin/* artifacts/bin/
+             cp -r build/inst/lib/* artifacts/bin/
+
+      - name: Upload Tesseract Binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: tesseract-binaries-${{ matrix.config.name }}
+          path: artifacts/bin
 
       - name: Display Tesseract Version
         run: |
