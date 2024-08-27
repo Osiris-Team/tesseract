@@ -2,10 +2,7 @@
 # Build Tesseract on Windows using cmake. No Training Tools.
 name: cmake-win64
 on:
-  #push:
-  schedule:
-    - cron: 0 23 * * *
-  workflow_dispatch:
+  workflow_dispatch: # This allows the workflow to be manually triggered
 
 env:
   ILOC: d:/a/local
